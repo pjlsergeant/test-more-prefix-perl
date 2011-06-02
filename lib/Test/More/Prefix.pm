@@ -36,7 +36,7 @@ Set the prefix. Accepts a string.
 =head1 AUTHOR
 
 Peter Sergeant - C<pete@clueball.com> on behalf of
-L<http://www.net-a-porter.com/|Net-A-Porter>.
+L<Net-A-Porter|http://www.net-a-porter.com/>.
 
 =cut
 
