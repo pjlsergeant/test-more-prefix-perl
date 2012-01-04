@@ -6,8 +6,8 @@ Test::More::Prefix - Prefix some test output
 
 =head1 DESCRIPTION
 
-Inject a prefix in to Test::Builder's C<note> and C<diag> output. Useful
-for providing context in noisy and repetitive tests
+Inject a prefix in to Test::Builder's informational output. Useful for
+providing context in noisy and repetitive tests
 
 =head1 SYNOPSIS
 
@@ -24,8 +24,17 @@ for providing context in noisy and repetitive tests
 
 =head1 IMPLEMENTATION
 
-Intercepts calls to L<Test::Builder>'s internal C<_print_comment> command and
-adds your prefix to all defined lines.
+=head2 Test::Builder
+
+For versions of L<Test::Simple> < 1 which use the original L<Test::Builder>
+underneath, intercepts calls to L<Test::Builder>'s internal C<_print_comment>
+command and adds your prefix to all defined lines.
+
+=head2 TB2
+
+For versions of L<Test::Simple> > 1 which use this new-fangled TB2 stuff, we
+wrap setting of L<TB2::Event::Log>'s C<message> attribute to prepend the
+prefix. This means that more of the possible output contains the prefix.
 
 =head1 FUNCTIONS
 
@@ -44,44 +53,16 @@ use strict;
 use warnings;
 use Test::More;
 
-require Exporter;
-our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(test_prefix);
-
-our $prefix = '';
-
-sub test_prefix {
-    $prefix = shift();
+sub import {
+    my ( $class, @args ) = @_;
+    my $version = $Test::Builder::VERSION;
+    if ( $version >  1 ) {
+        require Test::More::Prefix::TB2;
+        Test::More::Prefix::TB2->import(@args);
+    } else {
+        require Test::More::Prefix::TB1;
+        Test::More::Prefix::TB1->import(@args);
+    }
 }
 
-package Test::More::Prefix::ModifierRole;
-
-use strict;
-use warnings;
-use Moose::Role;
-
-requires '_print_comment';
-requires 'done_testing';
-
-around '_print_comment' => sub {
-    my ($orig, $self, $fh, @args) = @_;
-    if ( $Test::More::Prefix::prefix &&
-        length( $Test::More::Prefix::prefix ) ) {
-        @args = map {
-            defined $_ ? "${Test::More::Prefix::prefix}: $_" : $_
-        } @args;
-    }
-    return $self->$orig( $fh, @args );
-};
-
-before 'done_testing' => sub {
-    undef($Test::More::Prefix::prefix);
-};
-
-# mst told me to do this :-)
-package Test::Builder;
-use Moose;
-with 'Test::More::Prefix::ModifierRole';
-
 1;
-

@@ -7,6 +7,8 @@ use Test::More;
 use Test::Builder;
 use Test::More::Prefix qw/test_prefix/;
 
+plan skip_all => 'TB0 tests' unless $Test::Builder::VERSION < 1;
+
 # Get the Test Builder singleton
 my $tb = Test::Builder->new;
 
