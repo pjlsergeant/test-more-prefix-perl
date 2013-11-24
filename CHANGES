@@ -1,4 +1,7 @@
+0.03 Sun 24 Nov 2013
+    - Refined the version number we use to decide if to use TB2 or not, hat-tip
+      to ilmari
 0.02 Wed 04 Jan 2012
     - Added TB2 compatibility
 0.01 Fri 27 May 2011
-	- Initial release
+    - Initial release

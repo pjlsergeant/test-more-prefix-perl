@@ -45,7 +45,7 @@ around 'message' => sub {
     return $self->$orig($message, @_);
 };
 
-no Mouse;
+no TB2::Mouse;
 
 package Test::More::Prefix::ModifierRole::DoneTesting;
 
@@ -59,7 +59,7 @@ before 'done_testing' => sub {
     undef($Test::More::Prefix::prefix);
 };
 
-no Mouse;
+no TB2::Mouse;
 
 
 # mst told me to do this :-)
