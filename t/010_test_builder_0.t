@@ -7,6 +7,14 @@ use Test::More;
 use Test::Builder;
 use Test::More::Prefix qw/test_prefix/;
 
+if ( $INC{'Test/More/Prefix/TB1.pm'} ) {
+    pass("Using ::TB1");
+} elsif ( $INC{'Test/More/Prefix/TB2.pm'} ) {
+    pass("Using ::TB2");
+} else {
+    fail("Didn't load either of the TB helper modules?!");
+}
+
 # Get the Test Builder singleton
 my $tb = Test::Builder->new;
 
@@ -32,25 +40,29 @@ note "With prefix - c";
 diag "With prefix - d";
 
 # Generate some output without a prefix, again
-test_prefix( undef );
+test_prefix(undef);
 note "No prefix - e";
 diag "No prefix - f";
 
 # Put the old outputs back
-$tb->output( $old_note_output );
-$tb->failure_output( $old_diag_output );
+$tb->output($old_note_output);
+$tb->failure_output($old_diag_output);
 
 # Test we picked up what we were expecting
-is( $note_output,
-'# No prefix - a
+is(
+    $note_output,
+    '# No prefix - a
 # Hi there!: With prefix - c
 # No prefix - e
-', "Note msg interception works" );
+', "Note msg interception works"
+);
 
-is( $diag_output,
-'# No prefix - b
+is(
+    $diag_output,
+    '# No prefix - b
 # Hi there!: With prefix - d
 # No prefix - f
-', "Diag msg interception works" );
+', "Diag msg interception works"
+);
 
 done_testing;

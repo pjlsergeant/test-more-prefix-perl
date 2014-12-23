@@ -1,3 +1,5 @@
+0.04 Tue 23 Dec 2014
+    - Updated to use the new Test::Stream stuff, instead of TB2
 0.03 Sun 24 Nov 2013
     - Refined the version number we use to decide if to use TB2 or not, hat-tip
       to ilmari
