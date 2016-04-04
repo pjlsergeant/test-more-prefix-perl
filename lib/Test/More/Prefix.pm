@@ -55,7 +55,7 @@ use Test::More;
 
 sub import {
     my ( $class, @args ) = @_;
-    if ( $INC{'Test/Stream.pm'} ) {
+    if ( $INC{'Test2/API.pm'} ) {
         require Test::More::Prefix::TB2;
         Test::More::Prefix::TB2->import(@args);
     } else {

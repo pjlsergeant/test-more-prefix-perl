@@ -14,18 +14,17 @@ sub test_prefix {
     $prefix = shift();
 }
 
-Test::Stream->shared->munge(
+Test2::API::test2_stack->top->filter(
     sub {
-        my ( $stream, @e ) = @_;
+        my ( $stream, $e ) = @_;
 
-        for my $e (@e) {
-            next unless $prefix;
-            next
-              unless $e->isa('Test::Stream::Event::Diag')
-              || $e->isa('Test::Stream::Event::Note');
+        return $e unless $prefix;
+        return $e unless $e->isa('Test2::Event::Diag')
+                      || $e->isa('Test2::Event::Note');
 
-            $e->set_message( "$prefix: " . $e->message );
-        }
+        $e->set_message( "$prefix: " . $e->message );
+
+        return $e;
     }
 );
 

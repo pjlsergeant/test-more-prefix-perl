@@ -1,3 +1,6 @@
+0.05 Mon 04 Apr 2016
+    - Work with new Test::More stuff:
+      https://rt.cpan.org/Public/Bug/Display.html?id=110959
 0.04 Tue 23 Dec 2014
     - Updated to use the new Test::Stream stuff, instead of TB2
 0.03 Sun 24 Nov 2013
