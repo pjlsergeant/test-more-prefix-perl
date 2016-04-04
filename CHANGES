@@ -1,3 +1,5 @@
+0.06 Mon 04 Apr 2016
+    - Fixed version snafu
 0.05 Mon 04 Apr 2016
     - Work with new Test::More stuff:
       https://rt.cpan.org/Public/Bug/Display.html?id=110959
